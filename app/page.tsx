@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Url } from "@prisma/client";
 import React, { use, useEffect, useState } from "react";
-import { Url } from "./generated/prisma/client";
 
 const page = () => {
   const [url, setUrl] = useState("");

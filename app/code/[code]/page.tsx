@@ -1,5 +1,5 @@
 'use client';
-import { Url } from '@/app/generated/prisma/client';
+import { Url } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import React, { use, useEffect, useState } from 'react'
 const page = () => {
