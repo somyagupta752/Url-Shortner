@@ -6,9 +6,7 @@ import React, { use, useEffect, useState } from "react";
 import { Url } from "./generated/prisma/client";
 
 const page = () => {
-  const [url, setUrl] = useState(
-    "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/"
-  );
+  const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
