@@ -63,6 +63,47 @@ export async function POST(request: Request) {
 }
 
 export const GET = async (request: Request) => {
-  const data = await prisma.url.findMany({orderBy: { createdAt : "desc" }});
-  return Response.json({ data });
+  try {
+  const { searchParams } = new URL(request.url);
+  const search = searchParams.get("search") || undefined;
+  const minClicks = searchParams.get("minClicks");
+  const maxClicks = searchParams.get("maxClicks");
+  const sort = searchParams.get("sort") || "createdAt_desc";
+  const page = Number(searchParams.get("page") || "1");
+  const pageSize = Number(searchParams.get("pageSize") || "10");
+
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { url: { contains: search, mode: "insensitive" } },
+        { code: { contains: search, mode: "insensitive" } },
+      ];
+    }
+    if (minClicks !== null && minClicks !== undefined && minClicks !== "") {
+      where.clicks = { ...(where.clicks || {}), gte: Number(minClicks) };
+    }
+    if (maxClicks !== null && maxClicks !== undefined && maxClicks !== "") {
+      where.clicks = { ...(where.clicks || {}), lte: Number(maxClicks) };
+    }
+
+    const orderBy: any =
+      sort === "clicks_desc"
+        ? { clicks: "desc" }
+        : sort === "clicks_asc"
+        ? { clicks: "asc" }
+        : { createdAt: "desc" };
+
+    const skip = (Math.max(1, page) - 1) * Math.max(1, pageSize);
+    const take = Math.max(1, pageSize);
+
+    const [data, total] = await Promise.all([
+      prisma.url.findMany({ where, orderBy, skip, take }),
+      prisma.url.count({ where }),
+    ]);
+
+    return Response.json({ data, total });
+  } catch (err) {
+    console.error("GET /api/links error:", err);
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }
