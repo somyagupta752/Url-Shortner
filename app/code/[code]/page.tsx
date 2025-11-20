@@ -1,7 +1,7 @@
 'use client';
 import { Url } from '@prisma/client';
 import { useParams } from 'next/navigation';
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 const page = () => {
   const [info, setInfo] = useState<Url|null>(null);
   const [loading, setLoading] = useState(true);

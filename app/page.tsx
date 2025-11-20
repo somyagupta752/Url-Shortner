@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Url } from "@prisma/client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
   const [url, setUrl] = useState("");
@@ -334,6 +334,7 @@ const page = () => {
               </tbody>
             </table>
           </div>
+          {/* Pagination */}
             <div className="mt-4 flex items-center justify-between px-2">
               <div className="text-sm text-slate-300">Total: {total}</div>
               <div className="flex items-center gap-2">

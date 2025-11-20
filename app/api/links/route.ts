@@ -54,7 +54,7 @@ export async function POST(request: Request) {
         code: code,
       },
     });
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay of 2 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay of 1 seconds
     return Response.json({ code });
   } catch (err) {
     console.log(err);
